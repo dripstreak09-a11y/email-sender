@@ -1,0 +1,3 @@
+module.exports=[18622,(a,b,c)=>{b.exports=a.x("next/dist/compiled/next-server/app-page-turbo.runtime.prod.js",()=>require("next/dist/compiled/next-server/app-page-turbo.runtime.prod.js"))},42602,(a,b,c)=>{"use strict";b.exports=a.r(18622)},87924,(a,b,c)=>{"use strict";b.exports=a.r(42602).vendored["react-ssr"].ReactJsxRuntime},60350,a=>{"use strict";var b=a.i(87924);function c(){return(0,b.jsx)("div",{className:"h-screen w-screen flex justify-center items-center",children:(0,b.jsx)("h1",{className:"border border-white h-16 w-32 flex items-center justify-center p-4 rounded-xl cursor-pointer",onClick:()=>alert("hello world"),children:"Hello World"})})}a.s(["default",()=>c])}];
+
+//# sourceMappingURL=%5Broot-of-the-server%5D__b680a10d._.js.map

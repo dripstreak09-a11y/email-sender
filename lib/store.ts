@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import countReducer from "./slices/countSlice";
-
+import selectReducer from "./slices/selectionSlice"
 const store = configureStore({
   reducer: {
-    count: countReducer
+    count: countReducer,
+    selection: selectReducer
   },
 });
 

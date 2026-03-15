@@ -1,20 +1,26 @@
 "use client"
 
-import CountOp from "@/components/CountOp";
-
-import { useSelector } from "react-redux";
+import { useState } from "react";
+import { useSelector, useDispatch} from "react-redux";
+import { setSelectionId } from "@/lib/slices/selectionSlice";
 import { RootState } from "@/lib/store";
+import TextBox from "@/components/TextBox";
 
 export default function Home() {
-
-  const count = useSelector( (state: RootState)  => state.count.count);
+  const textBoxes = useSelector( (state: RootState)  => state.count.textBoxes);
+  const dispatch = useDispatch();
   return (
-    <div className="min-h-screen min-w-screen container flex flex-col items-center justify-center gap-5">
-      {/* <TextBox /> */}
-      <div className="display text-8xl">{count}</div>
-      <CountOp />
+    <div className="flex justify-center items-center">
+      <div className={`m-3 h-185 w-150 grid-container`} id="bounds" onMouseDown={() => {dispatch(setSelectionId(undefined))}}>
+        
+        {textBoxes.map((e: any, i: number) => (
+          <TextBox key={i} id={e?.id} x={e?.x} y={e?.y} width={e?.width} height={e?.height} />
+        ))}
 
-      
+        
+
+        
+      </div>
     </div>
   );
 }

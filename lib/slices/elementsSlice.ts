@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   textBoxes: [
-    { id: 1, x: 100, y: 100, width: 300, height: 80 },
-    { id: 2, x: 200, y: 200, width: 300, height: 80 }
+    { id: 1, x: 0, y: 0, width: 600, height: 80 },
+    { id: 2, x: 0, y: 100, width: 600, height: 80 },
+    { id: 3, x: 0, y: 200, width: 600, height: 80 }
   ]
 };
 const countSlice = createSlice({

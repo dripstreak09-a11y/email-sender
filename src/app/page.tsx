@@ -7,7 +7,7 @@ import { RootState } from "@/lib/store";
 import TextBox from "@/components/TextBox";
 
 export default function Home() {
-  const textBoxes = useSelector( (state: RootState)  => state.count.textBoxes);
+  const textBoxes = useSelector( (state: RootState)  => state.elements.textBoxes);
   const dispatch = useDispatch();
   return (
     <div className="flex justify-center items-center">

@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import countReducer from "./slices/countSlice";
+import elementsReducer from "./slices/elementsSlice";
 import selectReducer from "./slices/selectionSlice"
 const store = configureStore({
   reducer: {
-    count: countReducer,
+    elements: elementsReducer,
     selection: selectReducer
   },
 });

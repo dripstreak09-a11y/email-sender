@@ -1,37 +1,57 @@
 import React, { use, useState } from "react";
-import { Rnd } from "react-rnd";
+import { DraggableData, Rnd } from "react-rnd";
 import { useDispatch, useSelector } from "react-redux";
 
 import { RootState } from "@/lib/store";
 import { setSelectionId } from "@/lib/slices/selectionSlice";
+import { updateTextBox } from "@/lib/slices/elementsSlice";
 
-export default function TextBox({id, x, y, width, height}: {id: number | undefined, x: number, y: number, width: number, height: number}) {
+export default function TextBox({id, x, y, width, height}: {id: number, x: number, y: number, width: number, height: number}) {
 
   const [gridVisible, setGridVisible] = useState(false);
   const dispatch = useDispatch();
 
   const selectionId = useSelector( (state: RootState) => state.selection.selectionId);
 
-  let isSelected = selectionId === id && selectionId != undefined;
+  let isSelected = selectionId === id && selectionId > 0;
   return (
     <div>
 
       {gridVisible && <div className="grid-overlay"></div>}
 
       <Rnd
-        default={{
-          x: x,
-          y: y,
-          width: width,
-          height: height
-        }}
+        size={{ width, height }}
+        position={{ x, y }}
         bounds="#bounds"
         dragGrid={[20,20]}
         resizeGrid={[20,20]}
         onDragStart={() => setGridVisible(true)}
-        onDragStop={() => setGridVisible(false)}
+        onDragStop={(e, d) => {
+          setGridVisible(false)
+          // update text box
+          dispatch(updateTextBox({
+            id,
+            x: d.x,
+            y: d.y,
+            width: d.node.offsetWidth,
+            height: d.node.offsetHeight
+          }))
+        
+        }}
+        
         onResizeStart={() => {setGridVisible(true)}}
-        onResizeStop={() => setGridVisible(false)}
+        onResizeStop={(e, direction, ref, delta, position) => {
+          setGridVisible(false)
+          // update text box
+          dispatch(updateTextBox({
+            id,
+            x: position.x,
+            y: position.y,
+            width: ref.offsetWidth,
+            height: ref.offsetHeight
+          }))
+
+        }}
 
         
         onMouseDown={(e) => {e.stopPropagation(); dispatch(setSelectionId(id))} }

@@ -1,19 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   textBoxes: [
-    { id: 1, x: 0, y: 0, width: 600, height: 80 },
-    { id: 2, x: 0, y: 100, width: 600, height: 80 },
-    { id: 3, x: 0, y: 200, width: 600, height: 80 }
+    { id: 0, x: 0, y: 0, width: 0, height: 0 }
   ]
 };
 const countSlice = createSlice({
-  name: "count",
+  name: "elments",
   initialState,
   reducers: {
     textBoxCountInc : (state, action) => {
       state.textBoxes.push(action.payload)
+    },
+    textBoxCountDec: (state, action) => {
+      state.textBoxes = state.textBoxes.filter(value => value?.id !== action.payload)
+    },
+    updateTextBox: (state, action) => {
+      state.textBoxes = state.textBoxes.map(value=> value?.id === action.payload?.id ? action.payload : value)
     }
   },
 });
-export const { textBoxCountInc } = countSlice.actions;
+export const { textBoxCountInc, textBoxCountDec, updateTextBox} = countSlice.actions;
 export default countSlice.reducer;

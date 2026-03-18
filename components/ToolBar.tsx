@@ -1,17 +1,20 @@
 import React, {useEffect} from 'react'
 import { useDispatch, useSelector} from 'react-redux'
-import { textBoxCountInc, textBoxCountDec } from '@/lib/slices/elementsSlice';
+import { textBoxCountInc, textBoxCountDec} from '@/lib/slices/elementsSlice';
+import { setSelectionId } from '@/lib/slices/selectionSlice';
 import { RootState } from '@/lib/store';
+import TextBox from './TextBox';
 
 
 function ToolBar() {
 
   const dispatch = useDispatch();
 
-  const elements = useSelector((state: RootState) => state.elements.textBoxes)
+  const textboxes = useSelector((state: RootState) => state.elements.textBoxes)
 
+  const sampleElement = textboxes[0];
   const selectedId = useSelector((state: RootState) => state.selection.selectionId);
-  const prevElement = elements[elements.length - 1];
+  const prevElement = textboxes[textboxes.length - 1];
 
   // delete by key board
     useEffect(() => {
@@ -35,7 +38,9 @@ function ToolBar() {
         <div 
             className="button w-full h-12.5 bg-blue-400 rounded-2xl flex justify-center items-center cursor-pointer hover:opacity-80 text-white font-bold"
             onClick={() => {
-                dispatch(textBoxCountInc({ id: prevElement?.id + 1, x: 0, y: prevElement?.y+100, width: 600, height: 80 }))
+                const new_id = prevElement?.id + 1
+                dispatch(setSelectionId(new_id));
+                dispatch(textBoxCountInc({ ...sampleElement, id: new_id, x: 0, y: prevElement?.y+100, width: 600, height: 80 }))
             }}
         >
             add element
@@ -46,7 +51,10 @@ function ToolBar() {
             className="mt-5 button w-full h-12.5 bg-blue-400 rounded-2xl flex justify-center items-center cursor-pointer hover:opacity-80 text-white font-bold"
             onClick={() => {
                 if(selectedId !== null || selectedId !== 0){
-                    dispatch(textBoxCountDec(selectedId))
+                    if(textboxes.length > 0){
+                        dispatch(textBoxCountDec(selectedId))
+                    }
+                    
                 }
                 
             }}

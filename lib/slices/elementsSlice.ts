@@ -1,7 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   textBoxes: [
-    { id: 0, x: 0, y: 0, width: 0, height: 0 }
+    { id: 0, 
+      x: 0, 
+      y: 0, 
+      width: 0, 
+      height: 0,
+      background: "#547792",
+      border: {
+        isEnabled: true,
+        borderColor: "transparent",
+        borderWidth: "2px",
+        borderRadius: "10px",
+        borderStyle: "solid",
+      }
+    }
   ]
 };
 const countSlice = createSlice({

@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { DraggableData, Rnd } from "react-rnd";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -6,14 +6,26 @@ import { RootState } from "@/lib/store";
 import { setSelectionId } from "@/lib/slices/selectionSlice";
 import { updateTextBox } from "@/lib/slices/elementsSlice";
 
-export default function TextBox({id, x, y, width, height}: {id: number, x: number, y: number, width: number, height: number}) {
+export default function TextBox({id, element} : any) {
+
+  const {
+    width, 
+    height,
+    x,
+    y, 
+    border,
+    background
+  } = element;
 
   const [gridVisible, setGridVisible] = useState(false);
   const dispatch = useDispatch();
 
+  const sampleElement = useSelector( (state: RootState) => state.elements.textBoxes)[0];
+
   const selectionId = useSelector( (state: RootState) => state.selection.selectionId);
 
-  let isSelected = selectionId === id && selectionId > 0;
+  const isSelected = selectionId === id && selectionId > 0
+
   return (
     <div>
 
@@ -30,6 +42,7 @@ export default function TextBox({id, x, y, width, height}: {id: number, x: numbe
           setGridVisible(false)
           // update text box
           dispatch(updateTextBox({
+            ...sampleElement,
             id,
             x: d.x,
             y: d.y,
@@ -44,6 +57,7 @@ export default function TextBox({id, x, y, width, height}: {id: number, x: numbe
           setGridVisible(false)
           // update text box
           dispatch(updateTextBox({
+            ...sampleElement,
             id,
             x: position.x,
             y: position.y,
@@ -64,7 +78,16 @@ export default function TextBox({id, x, y, width, height}: {id: number, x: numbe
         className={isSelected ? "border border-blue-400 p-0.5 border-dashed" : ""}
       >
 
-        <div className="rounded-xl bg-amber-400 cursor-pointer w-full h-full"></div>
+        <div 
+          className="cursor-pointer w-full h-full" 
+          style={{
+            background: background,
+            borderWidth: border.isEnabled && border?.borderWidth,
+            borderStyle: border.isEnabled && border?.borderStyle,
+            borderColor: border.isEnabled && border?.borderColor,
+            borderRadius: border.isEnabled && border?.borderRadius
+          }}
+        ></div>
       </Rnd>
     </div>
   );

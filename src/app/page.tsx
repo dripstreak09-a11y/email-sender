@@ -27,7 +27,7 @@ export default function Home() {
       >
         
         {textBoxes.map((e: any, i: number) => (
-          <TextBox key={e?.id} id={e?.id} x={e?.x} y={e?.y} width={e?.width} height={e?.height} />
+          <TextBox key={e?.id} id={e?.id} element={e} />
         ))}
       </div>
 

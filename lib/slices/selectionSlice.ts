@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-  selectionId: 0
+  selectionId: null
 };
 const countSlice = createSlice({
   name: "select",

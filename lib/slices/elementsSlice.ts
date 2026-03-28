@@ -1,17 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-  textBoxes: [
+  elements: [
     { id: 0, 
       x: 0, 
       y: 0, 
       width: 0, 
       height: 0,
+      image: null,
+      action: null,
       background: "#547792",
       border: {
         isEnabled: true,
         borderColor: "transparent",
-        borderWidth: "2px",
-        borderRadius: "10px",
+        borderWidth: "0px",
+        borderRadius: [0,0,0,0],
         borderStyle: "solid",
       }
     }
@@ -21,16 +23,18 @@ const countSlice = createSlice({
   name: "elments",
   initialState,
   reducers: {
-    textBoxCountInc : (state, action) => {
-      state.textBoxes.push(action.payload)
+    elementAdd : (state, action) => {
+      state.elements.push(action.payload)
     },
-    textBoxCountDec: (state, action) => {
-      state.textBoxes = state.textBoxes.filter(value => value?.id !== action.payload)
+    elementDelete: (state, action) => {
+      if(state.elements.length > 1){
+        state.elements = state.elements.filter(value => value?.id !== action.payload)
+      }
     },
-    updateTextBox: (state, action) => {
-      state.textBoxes = state.textBoxes.map(value=> value?.id === action.payload?.id ? action.payload : value)
+    elementUpdate: (state, action) => {
+      state.elements = state.elements.map(value=> value?.id === action.payload?.id ? action.payload : value)
     }
   },
 });
-export const { textBoxCountInc, textBoxCountDec, updateTextBox} = countSlice.actions;
+export const { elementAdd, elementDelete, elementUpdate } = countSlice.actions;
 export default countSlice.reducer;
